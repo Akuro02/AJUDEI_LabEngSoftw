@@ -94,7 +94,7 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 
 ## Wireframes
 #### Início:
-![Alt text](image-url "Inicio")
+![Alt text](imagens/wireframe/inicio.png)
 #### Informações de um projeto:
 ![Alt text](image-url "Informações de um projeto")
 #### Explorar:
