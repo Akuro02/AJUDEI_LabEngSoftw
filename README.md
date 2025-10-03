@@ -102,3 +102,6 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 #### Perfil:
 ![Alt text](imagens/wireframes/perf.png)
 ## Modelagem leve do sistema
+![Alt text](imagens/modelagemLeve/casosDeUso.png)
+![Alt text](imagens/wireframes/sequencia.png)
+![Alt text](imagens/wireframes/classes.png)
