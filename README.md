@@ -94,11 +94,11 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 
 ## Wireframes
 #### Início:
-![Alt text](imagens/wireframe/inicio.png)
+![Alt text](imagens/wireframes/inicio.png)
 #### Informações de um projeto:
-![Alt text](image-url "Informações de um projeto")
+![Alt text](imagens/wireframes/infoProj.png)
 #### Explorar:
-![Alt text](image-url "Explorar")
+![Alt text](imagens/wireframes/expo.png)
 #### Perfil:
-![Alt text](image-url "Perfil")
+![Alt text](imagens/wireframes/perf.png)
 ## Modelagem leve do sistema
