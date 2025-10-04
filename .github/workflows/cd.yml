@@ -1,0 +1,16 @@
+name: CD - Placeholder (Proximo Passo)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  exibir-deploy-intencional:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mensagem de Deploy Futuro
+        run: |
+          echo "CI concluído com sucesso."
+          echo "Artefato pronto para deploy."
+          echo "Esta etapa seria o Deploy para AWS"
