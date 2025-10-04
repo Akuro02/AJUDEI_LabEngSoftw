@@ -1,33 +1,57 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
+# Controla quando o workflow inicia
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # O workflow é ativado quando ha um push na branch main
   push:
     branches: [ "main" ]
-  # Allows you to run this workflow manually from the Actions tab
+  # Permite rodar o workflow da aba de Actions
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Workflow composta de um ou mais jobs que podem rodar em paralelo
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build: # Job - Build
+    # O que vai rodar o job
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    # Steps representam uma sequencia de tarefas que serão realizadas como parte do job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      # Checkout: Baixa o código do repositório
+      - name: Baixar Repo
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
+      # Configura o ambiente Node.js
+      - name: Configurar Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      # Instalação: Baixa as dependências
+      - name: Instalar dependencias
+        run: npm install
+
+      # Executa o linter para verificar padrões de código
+      - name: Rodar Linter/Formatador
+        run: npm run lint
+
+      # Executa os testes automatizados
+      - name: Rodar testes unitarios e de integração
+        run: npm test
+
+      # Cria artefato final
+      - name: Compilar Aplicação
+        run: npm run build
+
+      # Salva o resultado do build para ser usado no CD
+      - name: Salvar Artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: meu-app-dist
+          path: build
+
+      # Roda um unico comando no shell
       - name: Run a one-line script
         run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+
+
