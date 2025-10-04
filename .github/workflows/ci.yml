@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # cache: 'npm'
+          cache: 'npm'
       # Instalação: Baixa as dependências
       - name: Instalar dependencias
         run: npm install
@@ -52,5 +52,6 @@ jobs:
       # Roda um unico comando no shell
       - name: Run a one-line script
         run: echo Hello, world!
+
 
 
