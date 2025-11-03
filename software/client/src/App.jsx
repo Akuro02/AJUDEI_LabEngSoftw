@@ -24,6 +24,7 @@ export default function App(){
   // useState initizializes the state variable 'services' and provides a function 'setServices' that can be used to update it (react needs the setServices so it can re-render the component when the state changes)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(localStorage.getItem('username'))
+  const [userCategory, setUserCategory] = useState(localStorage.getItem('category'))
   // same as above, but for the 'user' and 'loading' state variables
 
   useEffect(() => { fetchServices() }, [])
@@ -42,16 +43,19 @@ export default function App(){
     }
   }
 
-  function onLogin({ token, username }){
+  function onLogin({ token, username, category}){
     localStorage.setItem('token', token)
     localStorage.setItem('username', username)
+    localStorage.setItem('category', category)
     setUser(username)
+    setUserCategory(category)
   }
 
   function onLogout(){
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     setUser(null)
+    setUserCategory(null)
   }
 
   return (
@@ -72,8 +76,7 @@ export default function App(){
               <div className="auth">
                 {user ? (
                   <div>
-                    <div className="circle"></div>
-                    <button onClick={() => { axios.post(API + '/logout'); onLogout() }}>Logout</button>
+                    <button className="circle" onClick={() => { axios.post(API + '/logout'); onLogout() }}></button>
                   </div>
                 ) : <LoginForm onSuccess={onLogin} />}
               </div>
@@ -84,7 +87,7 @@ export default function App(){
 
       <main>
         <div className='cardsArea'>
-          {user && <CreateServiceForm onCreated={fetchServices} />}
+          {user && userCategory === 'ONG' && <CreateServiceForm onCreated={fetchServices} />}
           {loading ? <p>Carregando serviços...</p> : <ServiceList services={services} onUpdated={fetchServices} />}
         </div>
 
@@ -116,7 +119,4 @@ export default function App(){
 --> if loading is false then show the ServiceList component with the services and onUpdated props
 
 ------------------------------------------------------------------------------------------  
-
-
-
 */

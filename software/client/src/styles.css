@@ -1,11 +1,7 @@
 body{ font-family: system-ui, Arial, sans-serif; margin:0; padding:0; background:#f7f7fb; color:#111 }
-/* .app{ max-width:900px; margin:32px auto; padding:16px } */
-/* .header{ text-align:center; margin-bottom:20px } */
-/* .auth{ margin-top:12px } */
 .login input, .create input{ margin-right:8px; padding:6px 8px; border-radius:6px; border:1px solid #ccc }
 .create{ margin-bottom:18px; display:flex; gap:8px; align-items:center; flex-wrap:wrap }
 .list{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px }
-/* .card{ background:white; padding:12px; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.06) } */
 button{ display:inline-block; padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer }
 button:disabled{ opacity:0.6; cursor:not-allowed }
 
@@ -64,7 +60,7 @@ button:disabled{ opacity:0.6; cursor:not-allowed }
 
 .cardsArea{
     position: relative;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 32px auto;
     padding: 16px;
 }
@@ -76,6 +72,7 @@ button:disabled{ opacity:0.6; cursor:not-allowed }
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 450px;
 }
 
 .card-image{
@@ -94,10 +91,24 @@ button:disabled{ opacity:0.6; cursor:not-allowed }
     flex-direction: column;
 }
 .card-content h3{
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .card-content p{
-    margin-top: 0;
-    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.Card-description{
+    margin: 0 0 10px 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    line-clamp: 3;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
 }

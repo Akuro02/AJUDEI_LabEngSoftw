@@ -7,7 +7,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Simple in-memory users and tokens (demo only). Passwords stored in plain text for prototype.
-const users = [{ username: 'admin', password: 'admin123' }, { username: 'volunteer', password: 'help' }];
+const users = [{ username: 'admin', password: 'admin123', category: 'ONG'}, { username: 'volunteer', password: 'help', category: 'Volunteer'}];
 const tokens = new Map(); // token -> username
 
 function generateToken(username){
@@ -27,8 +27,8 @@ function requireAuth(req, res, next){ // checks if the request has a valid token
 
 // In-memory store (minimal)
 let services = [
-  { id: 1, title: 'Limpeza de parque', location: "Cotia, SP", description: 'Ajuda para limpar o parque central', slots: 10, owner: 'admin' },
-  { id: 2, title: 'Aula de reforço', location: "Osasco, SP", description: 'Aulas para crianças no contraturno', slots: 5, owner: 'admin' }
+  { id: 1, title: 'Limpeza de parque', location: "Cotia, SP", description: 'Ajuda para limpar o parque central', slots: 10, owner: 'admin', imageSource: 'https://blog.gerandofalcoes.com/wp-content/uploads/2022/10/moda-circular-e1668766786832.jpg'},
+  { id: 2, title: 'Aula de reforço', location: "Osasco, SP", description: 'Aulas para crianças no contraturno', slots: 5, owner: 'admin', imageSource: 'https://www.pmpf.rs.gov.br/turismo/wp-content/uploads/sites/51/2021/12/I2019-03-11_08_54_04_106220.jpg'}
 ];
 
 app.post('/api/login', (req, res) => { // this function handles login requests. It uses "=>" to create a function that takes req and res as parameters. It would work the same as "function login(req, res) { ... }" and then "app.post ('/api/login', login);"
@@ -38,7 +38,7 @@ app.post('/api/login', (req, res) => { // this function handles login requests. 
   // if a matching user is found, it generates a token for that user
   const token = generateToken(username);
   tokens.set(token, username);
-  res.json({ token, username }); // finally, it sends a JSON response containing the generated token and the username
+  res.json({ token, username, category: user.category}); // finally, it sends a JSON response containing the generated token and the username
 });
 
 app.post('/api/logout', (req, res) => {
@@ -56,9 +56,9 @@ app.get('/api/services', (req, res) => {
 
 // Protected: create service
 app.post('/api/services', requireAuth, (req, res) => {
-  const { title, location, description, slots } = req.body;
+  const { title, location, description, slots, imageSrc} = req.body;
   const id = services.length ? services[services.length-1].id + 1 : 1;
-  const s = { id, title, location, description, slots: Number(slots) || 0, owner: req.user };
+  const s = { id, title, location, description, slots: Number(slots) || 0, owner: req.user, imageSource: imageSrc};
   services.push(s);
   res.status(201).json(s);
 });

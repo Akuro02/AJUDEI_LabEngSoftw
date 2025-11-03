@@ -9,14 +9,15 @@ export default function CreateServiceForm({ onCreated }){
   const [location, setLocation] = useState('')
   const [description, setDescription] = useState('')
   const [slots, setSlots] = useState(1)
+  const [imageSrc, setImageSrc] = useState('')
   const [busy, setBusy] = useState(false)
 
   async function submit(e){
     e.preventDefault()
     setBusy(true)
     try{
-      await axios.post(API + '/services', { title, location, description, slots })
-      setTitle(''); setLocation(''); setDescription(''); setSlots(1);
+      await axios.post(API + '/services', { title, location, description, slots, imageSrc})
+      setTitle(''); setLocation(''); setDescription(''); setSlots(1); setImageSrc('')
       if(onCreated) onCreated()
     }catch(err){
       alert(err.response?.data?.error || 'Erro ao criar serviço')
@@ -30,6 +31,7 @@ export default function CreateServiceForm({ onCreated }){
       <input placeholder="Local" value={location} onChange={e=>setLocation(e.target.value)} required />
       <input placeholder="Descrição" value={description} onChange={e=>setDescription(e.target.value)} required />
       <input type="number" min="1" value={slots} onChange={e=>setSlots(e.target.value)} required />
+      <input placeholder="Imagem" value={imageSrc} onChange={e=>setImageSrc(e.target.value)} required />
       <button type="submit" disabled={busy}>{busy ? 'Criando...' : 'Criar'}</button>
     </form>
   )

@@ -21,18 +21,21 @@ export default function ServiceCard({ service, onUpdated }){
   return (
     <div className="card">
       <div className="card-image-container">
-        <img src='https://blog.gerandofalcoes.com/wp-content/uploads/2022/10/moda-circular-e1668766786832.jpg' alt='image' className='card-image'></img>
+        <img src={service.imageSource} alt='image' className='card-image'></img>
       </div>
       <div className='card-content'>
         <h3>{service.title}</h3>
-        <p>{service.owner} - {service.location}</p>
-        <p>{service.description}</p>
-        <p>Vagas: {service.slots}</p>
-        <div style={{marginTop:8}}>
-          <button onClick={join} disabled={busy || service.slots <= 0}>
-            {service.slots > 0 ? (busy ? 'Inscrevendo...' : 'Inscrever-se') : 'Sem vagas'}
-          </button>
+        <p style={{margin: '2px 0 6px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{service.owner} - {service.location}</p>
+        <p className='Card-description'>{service.description}</p>
+        <div style={{marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10}}>
+          <p>Vagas: {service.slots}</p>
+          <div style={{marginTop:0}}>
+            <button onClick={join} disabled={busy || service.slots <= 0}>
+              {service.slots > 0 ? (busy ? 'Inscrevendo...' : 'Inscrever-se') : 'Sem vagas'}
+            </button>
+          </div>
         </div>
+        
       </div>
     </div>
   )
