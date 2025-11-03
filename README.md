@@ -111,8 +111,8 @@ Para o desenvolvimento deste sistema, será utilizada a arquitetura Model-View-C
 - Model representa as principais entidades do sistema, como as ONGs, voluntários e trabalhos, além de conter as regras de negócio e a comunicação com o banco de dados.
 - A View é responsável pela interface com o usuário, exibindo dados e recebendo interações de forma dinâmica.
 - O Controller é um intermediário entre View e Model, processando as requisições da plataforma, como a criação de um novo trabalho ou inscrição de uma nova ONG, e retornando as respostas correspondentes.
-O modelo da arquitetura a seguir demonstra a divisão e os papéis de cada camada dentro do padrão MVC.
-![Alt text]()
+O modelo da arquitetura a seguir demonstra a divisão e os papéis de cada camada dentro do padrão MVC.<br>
+![Alt text](imagens/descricaoArquiteturaFerramentas/modelagemArquitetura.png)
 
 ## 7. Desenvolvimento
 #### 7.1.  Descrição do processo de construção do sistema:
@@ -141,6 +141,7 @@ Na implementação do sistema, o frontend foi desenvolvido em Javascript junto d
 ## 8. Resultados obtidos
 Foram iniciados os trabalhos no frontend do sistema, permitindo que algumas funcionalidades essenciais já estejam operacionais. O usuário já consegue realizar login na plataforma, enquanto as ONGs têm a capacidade de postar serviços disponíveis para voluntariado. Além disso, outros usuários podem visualizar essas oportunidades e se inscrever para participar das atividades oferecidas.
 Temos a tela inicial onde o usuário, ainda não logado, pode visualizar o site mas não pode interagir totalmente com ele (não pode se inscrever em serviços)
+
 
 
 
