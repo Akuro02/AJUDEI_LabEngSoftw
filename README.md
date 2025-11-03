@@ -72,7 +72,7 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 <p>A qualidade da plataforma depende de certos critérios essenciais. A plataforma deve apresentar as funções planejadas, oferecer navegação simples e acessível, assegurar bom desempenho no carregamento das páginas enquanto minimiza erros e falhas, proteger as informações dos usuários em conformidade com a LGPD e compatibilidade com diferentes dispositivos e navegadores. Também é necessária a implementação de uma arquitetura bem estruturada permitindo manutenção e atualizações futuras de forma prática, garantido que pessoas que não participaram do desenvolvimento inicial do projeto possam trabalhar nele posteriormente.</p>
 
 
-## Requisitos do produto (Funcionais e não funcionais)
+## 3. Requisitos do produto (Funcionais e não funcionais)
 ### Funcionais
 - **RF01**: Voluntários e ONGs devem poder criar contas.
 - **RF02**: ONGs precisam ser validadas antes de poder publicar eventos
@@ -92,7 +92,7 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 - **RNF03**: O sistema deve ter um uptime mínimo de 95% por ano.
 - **RNF04**: Erros do sistema devem ser registrados
 
-## Wireframes
+## 4. Wireframes
 #### Início:
 ![Alt text](imagens/wireframes/inicio.png)
 #### Informações de um projeto:
@@ -101,7 +101,47 @@ Dessa forma, reduzimos a fricção tanto para quem quer ajudar quanto para quem 
 ![Alt text](imagens/wireframes/expo.png)
 #### Perfil:
 ![Alt text](imagens/wireframes/perf.png)
-## Modelagem leve do sistema
+## 5. Modelagem leve do sistema
 ![Alt text](imagens/modelagemLeve/casosDeUso.png)
 ![Alt text](imagens/modelagemLeve/sequencia.png)
 ![Alt text](imagens/modelagemLeve/classes.png)
+
+## 6. Descrição de Arquitetura do sistema e ferramentas utilizadas
+Para o desenvolvimento deste sistema, será utilizada a arquitetura Model-View-Controller (MVC), que separa de forma clara a lógica, a interface e o controle das operações:
+- Model representa as principais entidades do sistema, como as ONGs, voluntários e trabalhos, além de conter as regras de negócio e a comunicação com o banco de dados.
+- A View é responsável pela interface com o usuário, exibindo dados e recebendo interações de forma dinâmica.
+- O Controller é um intermediário entre View e Model, processando as requisições da plataforma, como a criação de um novo trabalho ou inscrição de uma nova ONG, e retornando as respostas correspondentes.
+O modelo da arquitetura a seguir demonstra a divisão e os papéis de cada camada dentro do padrão MVC.
+![Alt text]()
+
+## 7. Desenvolvimento
+#### 7.1.  Descrição do processo de construção do sistema:
+Inicialmente, foram definidas as principais entidades do projeto e a forma como elas se comunicam, o que permitiu estabelecer uma arquitetura adequada ao cenário proposto. O sistema utiliza o padrão Model-View-Controller (MVC) para claramente dividir a camada lógica, de display e de dados, com o intuito de facilitar a divisão de trabalho e necessárias manutenções, além de tornar a aplicação mais segura.
+Na implementação do sistema, o frontend foi desenvolvido em Javascript junto da biblioteca React, que garante uma interface dinâmica e responsiva para usuários. O backend do sistema utiliza Node.js e o framework Express, responsáveis pelo tratamento de requisições e integração com o banco de dados MongoDB, realizada por meio da biblioteca Mongoose. A API REST será responsável pela comunicação do frontend e do backend, utilizando o formato JSON para troca de dados. Por fim, o software será hospedado na plataforma Vercel.
+#### 7.2 Tecnologias utilizadas:
+- Serviço Cloud utilizado:
+  - Vercel (hospedagem)
+- API utilizada:
+  - REST (comunicação frontend e backend)
+- Recursos de Backend:
+  - Node.js
+  - Express
+- Recursos de Frontend:
+  - React
+  - JavaScript
+  - CSS/HTML
+- Banco de dados:
+  - MongoDB
+  - Mongoose
+#### 7.3 Considerações
+- O sistema foi desenvolvido seguindo o padrão MVC, que garante clara separação entre lógica, visualização e dados, facilitando colaboração, manutenções e tornando o sistema seguro
+- A arquitetura do software permite modularidade, facilitando a adição e remoção de funcionalidades vista a necessidade.
+- A API REST facilita futuras integrações com sistemas externos
+- A escolha de React + Node.js + MongoDB proporciona desempenho, flexibilidade e facilidade de desenvolvimento
+## 8. Resultados obtidos
+Foram iniciados os trabalhos no frontend do sistema, permitindo que algumas funcionalidades essenciais já estejam operacionais. O usuário já consegue realizar login na plataforma, enquanto as ONGs têm a capacidade de postar serviços disponíveis para voluntariado. Além disso, outros usuários podem visualizar essas oportunidades e se inscrever para participar das atividades oferecidas.
+Temos a tela inicial onde o usuário, ainda não logado, pode visualizar o site mas não pode interagir totalmente com ele (não pode se inscrever em serviços)
+
+
+
+
