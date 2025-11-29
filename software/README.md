@@ -7,6 +7,9 @@ Recursos adicionados:
 - Logout.
 - Script root para rodar cliente + servidor com concurrently.
 
+Renomeie `/server/.env.example` para `/server/.env` e insira essas credenciais no arquivo:
+`DATABASE_URI=mongodb+srv://mainUser:password1234@cluster0.wg2vsmu.mongodb.net/AJUDEI?appName=Cluster0`
+
 Rodar:
 1) Instalar dependências do root (concurrently):
    - cd /path/to/project

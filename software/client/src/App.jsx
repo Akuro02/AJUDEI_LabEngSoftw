@@ -12,6 +12,7 @@ import Layout from './components/layout'
 import Ajuda from './pages/Ajuda'
 import Forum from './pages/Forum'
 import Notifications from './pages/notifications'
+import ConfirmInscricao from './pages/ConfirmInscricao';
 
 
 const API = 'http://localhost:3333/api'
@@ -111,6 +112,8 @@ export default function App(){
             path="/notifications"
             element={<Notifications/>}
           />
+
+          <Route path="/service/:id/apply" element={<ConfirmInscricao />} />
           
         </Route>
       </Routes>

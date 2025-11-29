@@ -13,6 +13,7 @@ connectDB();
 // Get the database schemas
 const User = require('./models/User');
 const Service = require('./models/Service');
+const Inscricao = require('./models/Inscricao');
 
 const app = express();
 app.use(cors());
@@ -129,19 +130,53 @@ app.post('/api/services', requireAuth, async (req, res) => {
   }
 });
 
-app.post('/api/services/:id/join', requireAuth, async (req, res) => {
-  const id = req.params.id;
-  try{
-    const service = await Service.findOne({_id: id});
+app.post('/api/services/:id/apply', requireAuth, async (req, res) => {
+  const serviceId = req.params.id;
+  const { role, availability, experience, observations, sharedData } = req.body;
+
+  try {
+    // 1. Check if Service exists
+    const service = await Service.findById(serviceId);
     if (!service) return res.status(404).json({ error: 'Serviço não encontrado' });
+
+    // --- NEW SECURITY CHECK STARTS HERE ---
+    
+    // 2. Check if this user is ALREADY subscribed to this specific service
+    const existingSubscription = await Inscricao.findOne({ 
+        user: req.user,        // The logged in user
+        serviceId: service._id // The service they are trying to join
+    });
+
+    if (existingSubscription) {
+        return res.status(400).json({ error: 'Você já está inscrito neste serviço.' });
+    }
+    
+    // --- NEW SECURITY CHECK ENDS HERE ---
+
+    // 3. Check slots
     if (service.slots <= 0) return res.status(400).json({ error: 'Sem vagas' });
+
+    // 4. Create the Subscription
+    await Inscricao.create({
+      user: req.user, 
+      serviceId: service._id,
+      role,
+      availability,
+      experience,
+      observations,
+      sharedData
+    });
+
+    // 5. Reduce the slot count
     service.slots -= 1;
     await service.save();
-    res.json(service);
-  } catch(err){
-    res.status(500).json({error: 'Erro ao se inscrever'});
+
+    res.status(201).json({ message: 'Inscrição realizada com sucesso!' });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao realizar inscrição' });
   }
-  
 });
 
 const PORT = process.env.PORT || 3333; // [TODO] I belive this should be passed to .env
