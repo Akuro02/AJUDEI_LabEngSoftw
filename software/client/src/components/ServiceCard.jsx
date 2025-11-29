@@ -9,7 +9,7 @@ export default function ServiceCard({ service, onUpdated }){
   async function join(){
     setBusy(true)
     try{
-      await axios.post(`http://localhost:3333/api/services/${service.id}/join`)
+      await axios.post(`http://localhost:3333/api/services/${service._id}/join`)
       if(onUpdated) onUpdated()
     }catch(err){
       alert(err.response?.data?.error || 'Erro ao se inscrever')

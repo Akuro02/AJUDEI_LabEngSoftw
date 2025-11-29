@@ -112,3 +112,9 @@ button:disabled{ opacity:0.6; cursor:not-allowed }
 
     flex-shrink: 0;
 }
+
+.LoginButtons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

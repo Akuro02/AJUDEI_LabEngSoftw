@@ -1,36 +1,75 @@
-// This jsx is for the login form component, it won't be shown if the user is already logged in
-
 import React, { useState } from 'react'
 import axios from 'axios'
+
+// Ensure this matches your server port
 const API = 'http://localhost:3333/api'
 
 export default function LoginForm({ onSuccess }){
-  // onSuccess is a prop that is a function passed from the parent component (App.jsx)
-  // prop is like an argument to a function, it is data passed from the parent component to the child component
-  // so now, I can call the passed function when the login is successful 
-
-  const [user, setUser] = useState('')
-  const [pass, setPass] = useState('')
+  const [isRegistering, setIsRegistering] = useState(false);
+  
+  // FIX 1: Renamed state to match the variables used below
+  const [username, setUsername] = useState('') 
+  const [password, setPassword] = useState('')
+  
+  const [category, setCategory] = useState('Volunteer');
   const [busy, setBusy] = useState(false)
 
   async function submit(e){
-    e.preventDefault() // prevents the default behavior of the form submission (which is to reload the page)
+    e.preventDefault() 
     setBusy(true)
+
+    const endpoint = isRegistering ? '/register' : '/login';
+    
+    // FIX 2: Now 'username' and 'password' actually exist!
+    const payload = isRegistering 
+        ? { username, password, category } 
+        : { username, password };
+    
     try{
-      const res = await axios.post(API + '/login', { username: user, password: pass })
-      // sends a POST request to the login endpoint with the username and password
-      // the server checks the credentials and returns a token if they are valid
+      const res = await axios.post(API + endpoint, payload)
       onSuccess(res.data)
     }catch(err){
-      alert(err.response?.data?.error || 'Erro no login')
-    }finally{ setBusy(false) }
+      alert(err.response?.data?.error || 'Erro na autenticação')
+    }finally{ 
+      setBusy(false) 
+    }
   }
 
   return (
-    <form className="login" onSubmit={submit}>
-      <input placeholder="Usuário" value={user} onChange={e=>setUser(e.target.value)} required />
-      <input placeholder="Senha" type="password" value={pass} onChange={e=>setPass(e.target.value)} required />
-      <button type="submit" disabled={busy}>{busy ? 'Entrando...' : 'Entrar'}</button>
-    </form>
+    <div className="login-container" style={{ display:'flex', flexDirection: 'row', alignItems: 'center', gap: '10px'}}>
+          
+          <form className="login" onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <input 
+                  placeholder="Usuário" 
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  required
+                  style={{padding: '4px', fontSize: '12px', height: '25px', width: '150px'}} 
+                />
+                
+                <input 
+                  placeholder="Senha" 
+                  type="password" 
+                  value={password}
+                  onChange={e => setPassword(e.target.value)} 
+                  required 
+                  style={{padding: '4px', fontSize: '12px', height: '25px', width: '150px'}} 
+                />
+              {isRegistering && (
+                <select value={category} onChange={e => setCategory(e.target.value)} style={{padding: '2px', fontSize: '12px', height: '25px'}}>
+                  <option value="Volunteer">Voluntário</option>
+                  <option value="ONG">ONG</option>
+                </select>
+              )}
+          </form>
+          <div style={{display: 'flex', flexDirection: 'column', gap:'5px', alignItems:'center', justifyContent: 'center'}}>
+            <button onClick={submit} disabled={busy}>
+              {busy ? 'Carregando...' : (isRegistering ? 'Registrar' : 'Entrar')}
+            </button>
+            <span onClick={() => setIsRegistering(!isRegistering)} style={{cursor: 'pointer', color: 'white', textDecoration: 'underline', fontSize: '10px', whiteSpace: 'nowrap'}} >
+              {isRegistering ? "Fazer Login" : "Cadastrar"};
+            </span>
+          </div>
+        </div>
   )
 }

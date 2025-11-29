@@ -6,6 +6,14 @@ import ServiceList from './components/ServiceList'
 import LoginForm from './components/LoginForm'
 import CreateServiceForm from './components/CreateServiceForm'
 
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import Home from './pages/Home'
+import Layout from './components/layout'
+import Ajuda from './pages/Ajuda'
+import Forum from './pages/Forum'
+import Notifications from './pages/notifications'
+
+
 const API = 'http://localhost:3333/api'
 
 function getToken(){
@@ -49,6 +57,7 @@ export default function App(){
     localStorage.setItem('category', category)
     setUser(username)
     setUserCategory(category)
+    window.location.reload();
   }
 
   function onLogout(){
@@ -59,40 +68,53 @@ export default function App(){
   }
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="headerElements">
-            <h1>AJUDEI</h1>
-            <div className="locationButton">
-              <img src="https://cdn-icons-png.flaticon.com/512/7606/7606169.png" width="30px" height="30px"></img>
-              <span className="locationName">São Paulo</span>
-              <img width="24" height="24" src="https://img.icons8.com/ios/50/000000/expand-arrow--v2.png" alt="expand-arrow--v2"/>
-            </div>
-            <div className="rightElements">
-              <p>Ajuda</p>
-              <p>Fórum</p>
-              <p>Encontre Trabalho</p>
-              <img width="30" height="30" src="https://img.icons8.com/material-sharp/24/FFFFFF/bell.png" alt="bell"/>
-              <div className="auth">
-                {user ? (
-                  <div>
-                    <button className="circle" onClick={() => { axios.post(API + '/logout'); onLogout() }}></button>
-                  </div>
-                ) : <LoginForm onSuccess={onLogin} />}
-              </div>
+    <Router>
+      <Routes>
+        <Route element={
+            <Layout 
+               user={user} 
+               onLogout={onLogout} 
+               onLogin={onLogin} 
+               API={API} 
+            />
+          }>
+          
+          <Route 
+             path="/" 
+             element={
+                <Home 
+                   user={user} 
+                   userCategory={userCategory} 
+                   loading={loading} 
+                   services={services} 
+                   fetchServices={fetchServices} 
+                />
+              } 
+          />
 
-            </div>
-        </div>
-      </header>
+          <Route 
+            path="/ajuda"
+            element={
+              <Ajuda/>
+            }
+          
+          />
 
-      <main>
-        <div className='cardsArea'>
-          {user && userCategory === 'ONG' && <CreateServiceForm onCreated={fetchServices} />}
-          {loading ? <p>Carregando serviços...</p> : <ServiceList services={services} onUpdated={fetchServices} />}
-        </div>
+          <Route 
+            path="/forum"
+            element={
+              <Forum/>
+            }
+          />
 
-      </main>
-    </div>
+          <Route
+            path="/notifications"
+            element={<Notifications/>}
+          />
+          
+        </Route>
+      </Routes>
+    </Router>
   )
 }
 /* notes:

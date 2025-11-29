@@ -7,7 +7,7 @@ export default function ServiceList({ services, onUpdated }){
   if(!services || services.length === 0) return <p>Nenhum serviço disponível.</p>
   return (
     <div className="list">
-      {services.map(s => <ServiceCard key={s.id} service={s} onUpdated={onUpdated} />)}
+      {services.map(s => <ServiceCard key={s._id} service={s} onUpdated={onUpdated} />)}
     </div>
   )
 }
