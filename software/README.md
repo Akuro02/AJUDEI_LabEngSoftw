@@ -12,6 +12,4 @@ Rodar:
    - npm i mongoose
 3) Rodar tudo:
    - cd .. && npm run start
-
-Observação: protótipo. Não usar em produção. Senhas em texto plano. Tokens simples.
-
+     
